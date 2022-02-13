@@ -1,9 +1,14 @@
 schema {
     query: Query
+    mutation: Mutation
 }
 
 type Query {
     getFlights: [GetFlight!]!
+}
+
+type Mutation {
+    bookFlight(id: ID!, noOfSeats: Int!): FlightBookedInfo 
 }
 
 type GetFlight {
@@ -15,4 +20,14 @@ type GetFlight {
     landingTime: String
     totalSeats: Int 
     reservedSeats: Int
+}
+
+type FlightBookedInfo {
+    id: ID!
+    companyName: String
+    fromLocation: String
+    toLocation: String 
+    takeoffTime: String
+    landingTime: String
+    noOfSeats: Int
 }

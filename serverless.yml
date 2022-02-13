@@ -43,15 +43,30 @@ custom:
         dataSource: getFlightsFunction
         request: false
         response: false
+      - type: Mutation
+        field: bookFlight
+        dataSource: bookFlightFunction
+        request: false
+        response: false
     dataSources:
       - type: AWS_LAMBDA
         name: getFlightsFunction
         config:
           functionName: getFlights
+      
+      - type: AWS_LAMBDA
+        name: bookFlightFunction
+        config:
+          functionName: bookFlight
 
 functions:
   getFlights:
     handler: api/getFlights.handler
+    environment:
+      FLIGHT_BOOKING_APPLICATION_TABLE: !Ref FlightBookingTable
+  
+  bookFlight:
+    handler: api/bookFlight.handler
     environment:
       FLIGHT_BOOKING_APPLICATION_TABLE: !Ref FlightBookingTable
 

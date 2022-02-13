@@ -1,0 +1,19 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    getFlights: [GetFlight!]!
+}
+
+type GetFlight {
+    id: ID!
+    companyName: String
+    fromLocation: String
+    toLocation: String 
+    takeoffTime: String
+    landingTime: String
+    totalSeats: Int 
+    reservedSeats: Int
+}

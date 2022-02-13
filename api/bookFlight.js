@@ -27,7 +27,7 @@ module.exports.handler = async (event) => {
     return dynamodb.updateItem(params).promise()
       .then(data => {
           const body = data.Attributes
-          const dataToSend = {
+          return {
             id: body.id.S,
             companyName: body.companyName.S,
             fromLocation: body.fromLocation.S,
@@ -35,17 +35,9 @@ module.exports.handler = async (event) => {
             takeoffTime: body.takeoffTime.S,
             landingTime: body.landingTime.S,
             noOfSeats: noOfSeats
-          } 
-          return {
-            "statusCode": 200,
-            "data": dataToSend,
           }
       })
       .catch(err => {
-        return {
-            "statusCode": 500,
-            "data": {},
-            "message": "Sorry, Something went wrong. Please try again later."
-          }
+        console.log(err)
       })
 };

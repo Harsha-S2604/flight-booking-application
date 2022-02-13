@@ -22,17 +22,9 @@ module.exports.handler = async (event) => {
                 });        
             }
             
-            return {
-                "statusCode": 200,
-                "data": flights
-            }
+            return flights
         })
         .catch(err => {
             console.log(err)
-            return {
-                "statusCode": 500,
-                "data": [],
-                "message": "Sorry, Something went wrong. Please try again later."
-            }
         })
 };

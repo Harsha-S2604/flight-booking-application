@@ -4,11 +4,16 @@ schema {
 }
 
 type Query {
-    getFlights: [GetFlight!]!
+    getFlights(page: String): GetFlightObj
 }
 
 type Mutation {
     bookFlight(id: ID!, noOfSeats: Int!): FlightBookedInfo 
+}
+
+type GetFlightObj {
+    lastExecutedKey: String!
+    flights: [GetFlight!]!
 }
 
 type GetFlight {

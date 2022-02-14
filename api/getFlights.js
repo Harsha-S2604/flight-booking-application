@@ -2,12 +2,20 @@ const AWS = require('aws-sdk')
 const dynamodb = new AWS.DynamoDB()
 
 module.exports.handler = async (event) => {
+    const lastExecutedKey = event.arguments.page
     const params = {        
-        TableName: process.env.FLIGHT_BOOKING_APPLICATION_TABLE
+        TableName: process.env.FLIGHT_BOOKING_APPLICATION_TABLE,
+        Limit: 1,
     }
-
+    if(lastExecutedKey) {
+        params["ExclusiveStartKey"] = {
+            "id": {
+                "S": lastExecutedKey
+            }
+        }
+    }
     return dynamodb.scan(params).promise()
-        .then(data => {            
+        .then(data => {
             const flights = [];
             for (let i = 0; i < data.Items.length; i++) {
                 flights.push({
@@ -22,7 +30,10 @@ module.exports.handler = async (event) => {
                 });        
             }
             
-            return flights
+            return {
+                "lastExecutedKey": data.LastEvaluatedKey.id["S"],
+                flights
+            }
         })
         .catch(err => {
             console.log(err)

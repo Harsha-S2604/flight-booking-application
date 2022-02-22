@@ -61,12 +61,12 @@ custom:
 
 functions:
   getFlights:
-    handler: api/getFlights.handler
+    handler: api/getFlights.getAllFlights
     environment:
       FLIGHT_BOOKING_APPLICATION_TABLE: !Ref FlightBookingTable
   
   bookFlight:
-    handler: api/bookFlight.handler
+    handler: api/bookFlight.bookFlight
     environment:
       FLIGHT_BOOKING_APPLICATION_TABLE: !Ref FlightBookingTable
 

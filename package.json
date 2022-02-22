@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "dynamoose": "^2.8.5",
     "serverless-appsync-plugin": "^1.12.1",
     "serverless-offline": "^8.4.0",
     "serverless-pseudo-parameters": "^2.6.1"

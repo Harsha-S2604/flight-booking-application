@@ -58,7 +58,7 @@ export class DB {
                 }
             },
             ReturnValues: "ALL_NEW",
-            TableName: this.tableName,
+            TableName: tableName,
             UpdateExpression: "SET #ts = #ts - :ns, #rs = #rs + :ns"
         }
 
@@ -76,6 +76,32 @@ export class DB {
                     "success": false,
                 }
             })
+    }
+
+    getById = async(tableName, event) => {
+        const id = event.arguments.id
+        const params = {
+            TableName: tableName,
+            Key: {
+                "id": {
+                    S: id
+                }
+            }
+        }
+
+        return this.dynamodb.getItem(params).promise()
+                .then(data => {
+                    return {
+                        "data": data,
+                        "success": true,
+                    }
+                })
+                .catch(err => {
+                    return {
+                        "data": null,
+                        "success": false,
+                    }
+                })
     }
 
 }

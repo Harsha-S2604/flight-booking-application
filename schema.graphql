@@ -8,7 +8,8 @@ type Query {
 }
 
 type Mutation {
-    bookFlight(id: ID!, noOfSeats: Int!): FlightBookedInfo 
+    bookFlight(id: ID!, noOfSeats: Int!): FlightBookedInfo
+    createFlight(flight: [GetFlight]): Response 
 }
 
 type GetFlightObj {
@@ -37,4 +38,9 @@ type FlightBookedInfo {
     takeoffTime: String
     landingTime: String
     noOfSeats: Int
+}
+
+type Response {
+    success: Boolean
+    message: String
 }

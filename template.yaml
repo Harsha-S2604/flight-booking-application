@@ -1,0 +1,36 @@
+Transform: AWS::Serverless-2016-10-31
+AWSTemplateFormatVersion: '2010-09-09'
+custom:      
+  FLIGHT_BOOKING_APPLICATION_TABLE: flight-booking-application-table
+
+Resources:
+  GetAllFlights:
+    Type: AWS:Serverless:Function
+    Properties:
+      Handler: api/getFlights.handler
+      Runtime: nodejs12.x
+      Description: Call the AWS Lambda API
+      Timeout: 100
+      Policies: AWSLambdaExecute
+      Environment:
+      Variables:
+        FLIGHT_BOOKING_APPLICATION_TABLE: !Ref FlightBookingTable
+      Tracing: Active
+      Events:
+        Handler:
+          Type: HttpApi
+          Properties:
+            Path: /getAll
+            Method: get
+      Handler: api
+  FlightBookingTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.FLIGHT_BOOKING_APPLICATION_TABLE}

@@ -9,6 +9,7 @@ service: flight-booking-application
 plugins:
   - serverless-appsync-plugin
   - serverless-pseudo-parameters
+  - serverless-offline
 
 provider:
   name: aws
@@ -61,12 +62,22 @@ custom:
 
 functions:
   getFlights:
-    handler: api/getFlights.getAllFlights
+    handler: api/getFlights.handler
     environment:
       FLIGHT_BOOKING_APPLICATION_TABLE: !Ref FlightBookingTable
   
   bookFlight:
     handler: api/bookFlight.bookFlight
+    environment:
+      FLIGHT_BOOKING_APPLICATION_TABLE: !Ref FlightBookingTable
+
+  createFlight:
+    handler: api/createFlight.handler
+    environment:
+      FLIGHT_BOOKING_APPLICATION_TABLE: !Ref FlightBookingTable
+
+  deleteFlight:
+    handler: api/deleteFlight.handler
     environment:
       FLIGHT_BOOKING_APPLICATION_TABLE: !Ref FlightBookingTable
 

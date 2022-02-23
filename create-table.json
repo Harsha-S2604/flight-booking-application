@@ -1,0 +1,43 @@
+{
+	"TableName": "flight-booking-application-table",
+	"AttributeDefinitions": [
+        {
+			"AttributeName": "id",
+			"AttributeType": "S"
+		},
+        {
+			"AttributeName": "companyName",
+			"AttributeType": "S"
+		},
+		{
+			"AttributeName": "fromLocation",
+			"AttributeType": "S"
+		},
+		{
+			"AttributeName": "toLocation",
+			"AttributeType": "S"
+		},
+		{
+			"AttributeName": "takeoffTime",
+			"AttributeType": "S"
+		},
+		{
+			"AttributeName": "landingTime",
+			"AttributeType": "S"
+		},
+		{
+			"AttributeName": "totalSeats",
+			"AttributeType": "N"
+		},
+		{
+			"AttributeName": "reservedSeats",
+			"AttributeType": "N"
+		}
+	],
+    "KeySchema": [
+        {
+            "KeyType": "HASH", 
+            "AttributeName": "id"
+        }
+    ]
+}

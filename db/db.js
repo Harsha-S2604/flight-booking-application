@@ -1,20 +1,19 @@
-import {Flight} from '../models/flight';
 const AWS = require('aws-sdk')
 
-export class DB {
+class DB {
     constructor() {
-        this.dynamodb = new AWS.DynamoDB();
         AWS.config.update({
             region: "local",
             endpoint: "http://localhost:8000"
         });
+        this.dynamodb = new AWS.DynamoDB();
     }
 
     getAll = async (tableName, event) => {
-        const lastExecutedKey = event.arguments.page
+        const lastExecutedKey = undefined
         const params = {
             TableName: tableName,
-            Limit: limit,
+            Limit: 50,
         }
 
         if(lastExecutedKey) {
@@ -32,6 +31,7 @@ export class DB {
                     "success": true,
                 }
             }).catch(err => {
+                console.log(err)
                 return {
                     "data": null,
                     "success": false,
@@ -104,4 +104,38 @@ export class DB {
                 })
     }
 
+    create = async (params) => {
+        await this.dynamodb.batchWriteItem(params).promise()
+                .then(response => {
+                    console.log("success")
+                    return {
+                        "success": true
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    return {
+                        "success": false
+                    }
+                })
+    }
+
+    delete = async(params) => {
+        await this.dynamodb.batchWriteItem(params).promise()
+                .then(response => {
+                    console.log("success")
+                    return {
+                        "success": true
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    return {
+                        "success": false
+                    }
+                })
+    }
+
 }
+
+module.exports = DB;

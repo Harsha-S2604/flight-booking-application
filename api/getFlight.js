@@ -1,9 +1,15 @@
-const { DB } = require("../db/db");
-
+const DB = require("../db/db");
  
 module.exports.getFlight = async (event) => {
     const db = new DB();
     const tableName = process.env.FLIGHT_BOOKING_APPLICATION_TABLE
+    if(!tableName) {
+        return {
+            "success": false,
+            "item": null,
+            "message": "Sorry, something went wrong. Please try again later."
+        }
+    }
     const response = db.getById(tableName, event);
     if(response["success"]) {
         const item = response["Item"]
